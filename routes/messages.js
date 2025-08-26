@@ -9,9 +9,16 @@ const router = express.Router();
 // Multer Cloudinary storage for chat files
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: {
-        folder: 'mern-chat/files',
-        allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt', 'zip', 'rar', 'mp4', 'mp3'],
+    params: async (req, file) => {
+        return {
+            folder: 'mern-chat/files',
+            resource_type: 'auto',
+            allowed_formats: [
+                'jpg', 'jpeg', 'png', 'gif',
+                'pdf', 'doc', 'docx', 'txt',
+                'zip', 'rar', 'mp4', 'mp3'
+            ],
+        };
     },
 });
 const upload = multer({ storage });
